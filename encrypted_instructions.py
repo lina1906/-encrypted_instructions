@@ -1,4 +1,4 @@
-#125805345
+#125807942
 valid_values = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 
 
@@ -12,12 +12,12 @@ def decode_string(encoded_string: str) -> str:
         if char in valid_values:
             count += char
         elif char == '[':
-            stack.append((current_fragment, count))
+            stack.append((current_fragment, int(count)))
             current_fragment = ''
             count = ''
         elif char == ']':
-            previous_fragment, repeat_count = stack.pop()
-            current_fragment = previous_fragment + current_fragment * int(repeat_count)
+            last_fragment, repeat_count = stack.pop()
+            current_fragment = last_fragment + current_fragment * repeat_count
         else:
             current_fragment += char
 
@@ -28,3 +28,4 @@ if __name__ == "__main__":
     input_string = input()
     output_string = decode_string(input_string)
     print(output_string)
+
