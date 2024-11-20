@@ -1,31 +1,30 @@
-#125807942
-valid_values = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
+#125846073
+VALID_VALUES = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9'}
 
 
-def decode_string(encoded_string: str) -> str:
-    """Расшифровывает строку."""
+def decode_instructions(encoded_instructions: str) -> str:
+    """Расшифровывает инструкцию."""
     stack = []
-    count = ''
-    current_fragment = ''
+    multiplier = ''
+    decoded_part = ''
 
-    for char in encoded_string:
-        if char in valid_values:
-            count += char
+    for char in encoded_instructions:
+        if char in VALID_VALUES:
+            multiplier += char
         elif char == '[':
-            stack.append((current_fragment, int(count)))
-            current_fragment = ''
-            count = ''
+            stack.append((decoded_part, int(multiplier)))
+            decoded_part = ''
+            multiplier = ''
         elif char == ']':
-            last_fragment, repeat_count = stack.pop()
-            current_fragment = last_fragment + current_fragment * repeat_count
+            last_part, repeat_multiplier = stack.pop()
+            decoded_part = last_part + decoded_part * repeat_multiplier
         else:
-            current_fragment += char
+            decoded_part += char
 
-    return current_fragment
+    return decoded_part
 
 
 if __name__ == "__main__":
-    input_string = input()
-    output_string = decode_string(input_string)
-    print(output_string)
-
+    input_instructions = input()
+    output_instructions = decode_instructions(input_instructions)
+    print(output_instructions)
